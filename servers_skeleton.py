@@ -42,13 +42,32 @@ class ListServer:
     pass
 
 
-class MapServer:
-    pass
+class MapServer(Server):
+
+    def __init__(self, list_of_products: List[Product], n_max_returned_entries: int, dict_of_products: Dict[str, Product], *args, **kwargs) -> None:
+        super().__init__(list_of_products, n_max_returned_entries, *args, **kwargs)
+        self.dict_of_products = dict_of_products
+
+    def get_entries(self, n : int = 1) -> List[Product]:
+        entries = 0
+        work_dict = {}
+        list_ = []
+        while entries <= n_max_entries:
+            for name, value in dict_of_products.items():
+                if len(name) = n
+
 
 
 class Client:
-    pass
 
+    def __init__(self, server: Server) -> None:
+        self.server = server
 
     def get_total_price(self, n_letters: Optional[int]) -> Optional[float]:
         raise NotImplementedError()
+
+
+
+
+
+
