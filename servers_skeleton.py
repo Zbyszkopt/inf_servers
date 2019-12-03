@@ -1,12 +1,14 @@
 # Karol Talaga 302929
 # Zbigniew Żeglecki 302947
+
+import re
 from typing import Optional, List, Dict
 from abc import ABC, abstractmethod
 
 
 class Product:
-    def __init__(self, product_name: str, price: float):
-        self.product_name = product_name
+    def __init__(self, name: str, price: float):
+        self.name = name
         self.price = price
 
 
@@ -44,18 +46,26 @@ class ListServer:
 
 class MapServer(Server):
 
-    def __init__(self, list_of_products: List[Product], n_max_returned_entries: int, dict_of_products: Dict[str, Product], *args, **kwargs) -> None:
+    def __init__(self, list_of_products: List[Product], n_max_returned_entries: int, *args, **kwargs) -> None:
         super().__init__(list_of_products, n_max_returned_entries, *args, **kwargs)
-        self.dict_of_products = dict_of_products
+        self.dict_of_products = self.make_dict()
 
-    def get_entries(self, n : int = 1) -> List[Product]:
-        entries = 0
-        work_dict = {}
-        list_ = []
-        while entries <= n_max_entries:
-            for name, value in dict_of_products.items():
-                if len(name) = n
+    def get_entries(self, n_letters: int = 1) -> List[Product]:
 
+        wishlist = []
+        for id, value in self.dict_of_products.items():
+            let_ = re.split('(\d+)', id)[0]
+            num_ = re.split('(\d+)', id)[1]
+            if len(num_) == 2 or len(num_) == 3:
+                if len(let_) == n_letters:
+                    wishlist.append(value)
+
+        if len(wishlist) > self.n_max_returned_entries:
+            raise TooManyProductsFoundError
+
+        sorted_wishlist = sorted(list_, key=lambda product: product.price)
+
+        return sorted_wishlist
 
 
 class Client:
@@ -64,7 +74,25 @@ class Client:
         self.server = server
 
     def get_total_price(self, n_letters: Optional[int]) -> Optional[float]:
-        raise NotImplementedError()
+
+        sum_of_prices = 0
+
+        try:
+            work_lst = self.server.get_entries(n_letters)
+            for prod in work_lst:
+                sum_of_prices += prod.price
+        except TooManyProductsFoundError:
+            print('Error in getting prices for number: {num}\n Reason: Too many products have been found'.format(num=n_letters))
+            return None
+
+        if sum_of_prices == 0:
+            return None
+        else:
+            return sum_of_prices
+
+
+
+
 
 
 
