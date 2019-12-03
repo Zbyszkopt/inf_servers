@@ -37,7 +37,7 @@ class Server(ABC):
         raise NotImplementedError
 
 
-class ListServer:
+class ListServer(Server):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -47,10 +47,10 @@ class ListServer:
             let_ = re.split('(\d+)', prod.name)[0]
             num_ = re.split('(\d+)', prod.name)[1]
             if len(num_) == 2 or len(num_) == 3:
-                if len(let_):
-                    wishlist.append(product)
+                if len(let_) == n_letters:
+                    wishlist.append(prod)
         if len(wishlist) > self.n_max_returned_entries:
-            raise TooManyProductsFoundError()
+            raise TooManyProductsFoundError
         sorted_wishlist = sorted(wishlist, key=lambda product: product.price)
         return sorted_wishlist
 
@@ -74,7 +74,7 @@ class MapServer(Server):
         if len(wishlist) > self.n_max_returned_entries:
             raise TooManyProductsFoundError
 
-        sorted_wishlist = sorted(list_, key=lambda product: product.price)
+        sorted_wishlist = sorted(wishlist, key=lambda product: product.price)
 
         return sorted_wishlist
 
