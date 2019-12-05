@@ -15,6 +15,12 @@ class ServerTest(unittest.TestCase):
             entries = server.get_entries(2)
             self.assertEqual(Counter([products[2], products[1]]), Counter(entries))
 
+    def test_exception_throw(self):
+        products = [Product('PP235', 2), Product('PP234', 1), Product('PP233', 3), Product('PP232', 7)]
+        for server_type in server_types:
+            server = server_type(products)
+            self.assertRaises(TooManyProductsFoundError, server.get_entries, 2)
+
 
 class ClientTest(unittest.TestCase):
     def test_total_price_for_normal_execution(self):
