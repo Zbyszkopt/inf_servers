@@ -93,7 +93,6 @@ class Client:
             for prod in work_lst:
                 sum_of_prices += prod.price
         except TooManyProductsFoundError:
-            print('Error in getting prices for number: {num}\n Reason: Too many products have been found'.format(num=n_letters))
             return None
 
         if sum_of_prices == 0:

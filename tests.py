@@ -30,6 +30,30 @@ class ClientTest(unittest.TestCase):
             client = Client(server)
             self.assertEqual(5, client.get_total_price(2))
 
+    def test_total_price_for_exeptional_execution(self):
+        products = [Product('PP234', 2), Product('PP235', 3), Product('PP236', 1), Product('PP237', 5),
+                    Product('PPP238', 1)]
+        for server_type in server_types:
+            server = server_type(products)
+            client = Client(server)
+            self.assertEqual(None, client.get_total_price(2))
+
+    def test_total_price_for_sum_eq_0_execution1(self):
+
+        products = [Product('PP234', 0), Product('PP235', 0), Product('PP236', 0), Product('PP237', 0),
+                    Product('PPP238', 1)]
+        for server_type in server_types:
+            server = server_type(products)
+            client = Client(server)
+            self.assertEqual(None, client.get_total_price(2))
+
+    def test_total_price_for_sum_eq_0_execution2(self):
+        products = [Product('PP234', 0), Product('PP235', 0), Product('PP236', 0), Product('PP237', 0),
+                    Product('PPP238', 1)]
+        for server_type in server_types:
+            server = server_type(products)
+            client = Client(server)
+            self.assertEqual(None, client.get_total_price(4))
 
 if __name__ == '__main__':
     unittest.main()
