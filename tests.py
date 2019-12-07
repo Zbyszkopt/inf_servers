@@ -1,3 +1,4 @@
+# Karol Talaga 302929, Zbigniew Żeglecki 302947
 import unittest
 from collections import Counter
 

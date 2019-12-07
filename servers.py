@@ -1,5 +1,4 @@
-# Karol Talaga 302929
-# Zbigniew Żeglecki 302947
+# Karol Talaga 302929, Zbigniew Żeglecki 302947
 
 import re
 from typing import Optional, List, Dict
