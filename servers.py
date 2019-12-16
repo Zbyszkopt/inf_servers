@@ -39,6 +39,7 @@ class Server(ABC):
 class ListServer(Server):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.products = self.list_of_products
 
     def get_entries(self, n_letters: int = 1) -> List[Product]:
         wishlist = []
@@ -58,23 +59,20 @@ class MapServer(Server):
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        self.dict_of_products = self.make_dict()
+        self.products = self.make_dict()
 
     def get_entries(self, n_letters: int = 1) -> List[Product]:
 
         wishlist = []
-        for id, value in self.dict_of_products.items():
+        for id, value in self.products.items():
             let_ = re.split('(\d+)', id)[0]
             num_ = re.split('(\d+)', id)[1]
             if len(num_) == 2 or len(num_) == 3:
                 if len(let_) == n_letters:
                     wishlist.append(value)
-
         if len(wishlist) > self.n_max_returned_entries:
             raise TooManyProductsFoundError
-
         sorted_wishlist = sorted(wishlist, key=lambda product: product.price)
-
         return sorted_wishlist
 
 
